@@ -40,9 +40,9 @@ def setup():
         while(right_account not in correct_answer):
             right_account = input(colorama.Fore.MAGENTA + '❌ Invalid option. Please confirm with (Y/N): ' + colorama.Fore.WHITE).strip().lower()
 
-        if right_account == 'n':
-            logger.logger(log_method='info', log_message='Incorrect account token provided by the user. Restarting')
-            continue
+            if right_account == 'n':
+                logger.logger(log_method='info', log_message='Incorrect account token provided by the user. Restarting')
+                continue
 
         working_token = True
 
