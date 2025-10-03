@@ -1,26 +1,52 @@
 from utils.preflight import config_initializer
-import utils.config_helper as config_helper
-import utils.logger as logger
-from pathlib import Path
-import setup
-import start
-import utils.discord_helper as discord_helper
-import time
+import modules.setup as setup
+import modules.start as start
+import colorama
+import modules.view_discord_info as view_discord_info
+import os
+
+colorama.init(autoreset=True)
 
 def main():
+    os.system('cls')
     config_initializer.initialize_config()
 
-    # get token value
-    discord_token = config_helper.get_value('discord_user_token')
-    token_check = discord_helper.get_discord_user_data(discord_token)
+    choices = {
+        '1': 'View assigned discord account',
+        '2': 'Create a new configuration',
+        '3': 'Start self bot'
+    }
 
-    if token_check['success'] == False:
-        logger.logger(log_method='error', log_message='Discord token validation failed.', log_error=f'Reason: {token_check['error_message']}')
-        logger.logger(log_method='info', log_message='Proceeding to run setup in 3 seconds...')
-        time.sleep(3)
-        return setup.setup()
-    
-    return start()
+    print_main_menu(choices)
+
+    while True:
+        input_choice = input(colorama.Fore.MAGENTA + "➜ " + colorama.Fore.YELLOW + " Enter your choice: " + colorama.Fore.WHITE)
+
+        if input_choice in choices:
+            break
+
+        print(colorama.Fore.RED + "[!] Thats not a valid option, please choose again.")
+        continue
+
+    match input_choice.lower():
+        case "1":
+            return view_discord_info.view_discord_info()
+        case "2":
+            return setup.setup()
+        case "3":
+            return start.start()
+
+def print_main_menu(choices):
+    width = 40
+    title = "⚡ MAIN MENU ⚡"
+
+    print(colorama.Fore.CYAN + "=" * width)
+    print(colorama.Fore.YELLOW + title.center(width))
+    print(colorama.Fore.CYAN + "=" * width)
+
+    for key, value in choices.items():
+        print(colorama.Fore.GREEN + f"[{key}]" + colorama.Fore.WHITE + f" - {value}")
+    print(colorama.Fore.CYAN + "=" * width)
 
 if __name__ == "__main__":
     main()

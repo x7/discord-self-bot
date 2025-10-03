@@ -8,6 +8,7 @@ import traceback
 DEFAULT_CONFIG = {
     'discord_user_token': '',
     'discord_user_username': '',
+    'discord_user_display_name': '',
     'discord_user_id': '',
     'logging': {
         'success': True,

@@ -26,7 +26,7 @@ def set_value(key, value):
     does_key_exist = get_value(key)
 
     if does_key_exist == None:
-        logger.logger(log_method='warn', log_message=f'The provided key {key} deos not exist in the config unable to set value')
+        logger.logger(log_method='warn', log_message=f'The provided key {key} does not exist in the config unable to set value')
         return None
     
     config_object[key] = value
@@ -39,13 +39,11 @@ def get_value(key):
     if config_file == None:
         logger.logger(log_method='warn', log_message=f'Unable to get {key} as the configuration file is null')
         return None
-    
-    print(config_file)
 
     config_object = json.loads(config_file.read_text())
 
     if type(config_object) != dict:
-        logger.logger(log_method='warn', log_message=f'The provided key {key} deos not exist in the config unable to get value')
+        logger.logger(log_method='warn', log_message=f'The provided key {key} does not exist in the config unable to get value')
         return None
     
     return config_object.get(key)
