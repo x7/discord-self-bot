@@ -1,28 +1,30 @@
-from utils.preflight import config_initializer
-import modules.setup as setup
-import modules.start as start
 import colorama
-import modules.view_discord_info as view_discord_info
 import os
+import modules.setup_config as setup_config
+import modules.start as start
+import modules.view_discord_info as view_discord_info
+import modules.setup_discord as setup_discord
+import utils.config_helper as helper
+import utils.file_cache as file_cache
 
-colorama.init(autoreset=True)
+# Instances
+file_content_cache = file_cache.FileCache()
+
+CHOICES = {
+    '1': 'View assigned discord account',
+    '2': 'Setup discord account',
+    '3': 'Create a new configuration',
+    '4': 'Start self bot'
+}
 
 def main():
     os.system('cls')
-    config_initializer.initialize_config()
-
-    choices = {
-        '1': 'View assigned discord account',
-        '2': 'Create a new configuration',
-        '3': 'Start self bot'
-    }
-
-    print_main_menu(choices)
+    print_main_menu()
 
     while True:
         input_choice = input(colorama.Fore.MAGENTA + "➜ " + colorama.Fore.YELLOW + " Enter your choice: " + colorama.Fore.WHITE)
 
-        if input_choice in choices:
+        if input_choice in CHOICES:
             break
 
         print(colorama.Fore.RED + "[!] Thats not a valid option, please choose again.")
@@ -32,11 +34,13 @@ def main():
         case "1":
             return view_discord_info.view_discord_info()
         case "2":
-            return setup.setup()
+            return setup_discord.setup_discord()
         case "3":
+            return setup_config.setup_config()
+        case "4":
             return start.start()
 
-def print_main_menu(choices):
+def print_main_menu():
     width = 40
     title = "⚡ MAIN MENU ⚡"
 
@@ -44,9 +48,11 @@ def print_main_menu(choices):
     print(colorama.Fore.YELLOW + title.center(width))
     print(colorama.Fore.CYAN + "=" * width)
 
-    for key, value in choices.items():
+    for key, value in CHOICES.items():
         print(colorama.Fore.GREEN + f"[{key}]" + colorama.Fore.WHITE + f" - {value}")
     print(colorama.Fore.CYAN + "=" * width)
 
 if __name__ == "__main__":
+    colorama.init(autoreset=True)
+
     main()

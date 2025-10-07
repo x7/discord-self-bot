@@ -1,0 +1,5 @@
+Handle if the object actually exist in initialize_config
+If the config.json isnt setup it throws errors cause tried to use a logger function - fixed
+if the config.json exist but is empty throws errors
+reference codes arent generated unique - fixed
+If an error occurs during writing in logger() save the old content

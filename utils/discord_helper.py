@@ -1,5 +1,5 @@
 import requests
-import utils.logger as logger
+import utils.log.logger as logger
 import traceback
 
 def get_discord_user_data(token):
