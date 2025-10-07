@@ -6,6 +6,9 @@ import modules.view_discord_info as view_discord_info
 import modules.setup_discord as setup_discord
 import utils.config_helper as helper
 import utils.file_cache as file_cache
+import utils.preflight.library_check as library_check
+import utils.preflight.version_check as version_check
+import utils.preflight.system_check as system_check
 
 # Instances
 file_content_cache = file_cache.FileCache()
@@ -55,4 +58,9 @@ def print_main_menu():
 if __name__ == "__main__":
     colorama.init(autoreset=True)
 
-    main()
+    # preflight checks
+    system_check.check_if_system_supported()
+    version_check.validate_python_version()
+    library_check.check_libraries()
+
+    # main()

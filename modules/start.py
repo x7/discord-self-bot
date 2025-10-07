@@ -1,4 +1,3 @@
-import os
 import colorama
 import time
 import utils.config_helper as config_helper
@@ -6,9 +5,10 @@ import utils.discord_helper as discord_helper
 import utils.encryption as encryption
 import utils.log.logger as logger
 import modules.setup_config as setup_config
+import utils.util as util
 
 def start():
-    os.system('cls')
+    util.clear_console()
     start_message()
 
     discord_token = encryption.decrypt_data(config_helper.get_value('discord_user_token'))

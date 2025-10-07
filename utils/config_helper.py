@@ -37,7 +37,7 @@ def does_config_exist():
 def get_config_file():
     config_file_path = Path(get_config_path())
 
-    if Path.exists(config_file_path.absolute()) == False:
+    if does_config_exist() == False:
         logger.logger(log_method='info', log_message='Configuration file did not exist redirecting to configuration setup in 3 seconds...')
         time.sleep(3)
         setup_config.setup()
@@ -73,6 +73,7 @@ def get_config_file():
 def create_default_config():
     config_exist = does_config_exist()
     config_path = get_config_path()
+    
     if config_exist == True:
         config_path.unlink()
         

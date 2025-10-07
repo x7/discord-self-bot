@@ -1,0 +1,4 @@
+colorama==0.4.6
+cryptography==46.0.2
+Requests==2.32.5
+Requests1==2.32.5

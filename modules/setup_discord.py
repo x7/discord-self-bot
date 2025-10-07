@@ -1,14 +1,15 @@
 import os
 import main
+import traceback
+import colorama
 import utils.log.logger as logger
 import utils.discord_helper as discord_helper
 import utils.config_helper as config_helper
 import utils.encryption as encryption
-import traceback
-import colorama
+import utils.util as util
 
 def setup_discord():
-    os.system('cls')
+    util.clear_console()
     logger.logger(log_method='info', log_message='Setting up new discord account')
 
     while True:

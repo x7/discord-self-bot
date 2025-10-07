@@ -6,9 +6,10 @@ import modules.setup_discord as setup_discord
 import utils.config_helper as config_helper
 import utils.encryption as encryption
 import utils.log.logger as logger
+import utils.util as util
 
 def view_discord_info():
-    os.system('cls')
+    util.clear_console()
 
     discord_token = encryption.decrypt_data(config_helper.get_value('discord_user_token'))
     if discord_token == None or discord_token == "":

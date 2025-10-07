@@ -10,15 +10,15 @@ import traceback
 import utils.config_helper as config_helper
 import sys
 
-# TODO:
-# Find a better log way for inside these functions as it causes infinite loops
 def logger(log_method, log_message, log_error = "", log_stacktrace = ""): 
     current_time = date_formatter.format_datetime(datetime.now())
     valid_log_types = ['success', 'warn', 'info', 'error', 'debug', 'default']
     reference_id = generate_reference_code.generate_reference_code()
 
+    # print msg and set log method to default
     if log_method.lower() not in valid_log_types:
-        return logger(log_method='default', log_message=f"Invalid log type '{log_method}' provided, falling back to DEFAULT.")
+        print(colorama.Fore.RED + f'[!] Invalid log type "{log_method}" provided, falling back to DEFAULT.')
+        log_method = 'default'
     
     log_string = f'{colorama.Fore.YELLOW}[{current_time}] {colorama.Fore.RESET}{colorama.Fore.LIGHTCYAN_EX}[Reference ID: {reference_id}]{colorama.Fore.RESET} %color%[{log_method.upper()}]{colorama.Fore.RESET} - '
     
