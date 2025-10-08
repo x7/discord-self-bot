@@ -1,14 +1,14 @@
 import colorama
 import os
+import utils.util as util
 import modules.setup_config as setup_config
 import modules.start as start
 import modules.view_discord_info as view_discord_info
 import modules.setup_discord as setup_discord
-import utils.config_helper as helper
 import utils.file_cache as file_cache
-import utils.preflight.library_check as library_check
-import utils.preflight.version_check as version_check
-import utils.preflight.system_check as system_check
+import preflight.library_check as library_check
+import preflight.version_check as version_check
+import preflight.system_check as system_check
 
 # Instances
 file_content_cache = file_cache.FileCache()
@@ -21,7 +21,7 @@ CHOICES = {
 }
 
 def main():
-    os.system('cls')
+    util.clear_console()
     print_main_menu()
 
     while True:
