@@ -6,6 +6,7 @@ import utils.encryption as encryption
 import utils.log.logger as logger
 import modules.setup_config as setup_config
 import utils.util as util
+import user
 
 def start():
     util.clear_console()
@@ -24,6 +25,8 @@ def start():
     discord_username = config_helper.get_value('discord_user_username')
     discord_id = config_helper.get_value('discord_user_id')
     logger.logger(log_method='success', log_message=f'Authentication successful for user {discord_username} [ID: {discord_id}].')
+
+    user.client_setup()
 
 def start_message():
     width = 50

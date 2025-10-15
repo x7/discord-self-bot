@@ -1,5 +1,5 @@
 import colorama
-import os
+import user as user
 import utils.util as util
 import modules.setup_config as setup_config
 import modules.start as start
@@ -9,6 +9,7 @@ import utils.file_cache as file_cache
 import preflight.library_check as library_check
 import preflight.version_check as version_check
 import preflight.system_check as system_check
+import events.event_handler as event_handler
 
 # Instances
 file_content_cache = file_cache.FileCache()
@@ -63,4 +64,4 @@ if __name__ == "__main__":
     version_check.validate_python_version()
     library_check.check_libraries()
 
-    # main()
+    main()
