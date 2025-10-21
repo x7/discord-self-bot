@@ -25,6 +25,7 @@ def start():
     discord_username = config_helper.get_value('discord_user_username')
     discord_id = config_helper.get_value('discord_user_id')
     logger.logger(log_method='success', log_message=f'Authentication successful for user {discord_username} [ID: {discord_id}].')
+    logger.logger(log_method='info', log_message='Attempting to connect to discord')
 
     user.client_setup()
 

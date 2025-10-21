@@ -1,4 +1,6 @@
 import requests
+import asyncio
+import user
 import utils.log.logger as logger
 import traceback
 
@@ -25,3 +27,17 @@ def get_discord_user_data(token):
         return { 'success': False, 'error_message': data['message'] }
     
     return { 'success': True, 'data': data }
+
+async def delete_message(message, time_to_wait):
+    try:
+        await asyncio.sleep(time_to_wait)
+        await message.delete()
+    except Exception as error:
+        logger.logger(
+            log_method='error',
+            log_message=f'Failed to delete message with the id of {message.id}',
+            log_error=error,
+            log_stacktrace=traceback.format_exc()
+        )
+
+        return None

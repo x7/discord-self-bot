@@ -13,6 +13,7 @@ DEFAULT_CONFIG = {
     'discord_user_username': '',
     'discord_user_display_name': '',
     'discord_user_id': '',
+    'discord_prefix': '!',
     'logging': {
         'success': True,
         'warn': True,

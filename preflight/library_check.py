@@ -1,7 +1,6 @@
 import sys
 import os
 import importlib.metadata
-import colorama
 from pathlib import Path
 import time
 import traceback
@@ -41,33 +40,24 @@ def check_libraries():
         logger.logger(log_method='info', log_message='Library preflight check completed — no outdated or missing modules found.')
         return
     
-    logger.logger(log_method='warn', log_message=f'Found {len(failed_libraries)} outdated module(s).')
-    logger.logger(log_method='warn', log_message=f'Found {len(uninstalled_libaries)} missing module(s).')
+    print(f'Found {len(failed_libraries)} outdated module(s).')
+    print(f'Found {len(uninstalled_libaries)} missing module(s).')
     for failed_library in failed_libraries:
         failed_name, failed_version, required_version = failed_library
 
-        logger.logger(
-            log_method='warn',
-            log_message=f'Library "{failed_name}" requires an update: {failed_version} → {required_version}'
-        )
-        logger.logger(
-            log_method='info',
-            log_message=f'You can update it using: pip install --upgrade {failed_name}'
-        )
+        print(f'Library "{failed_name}" requires an update: {failed_version} → {required_version}')
+        print(f'You can update it using: pip install --upgrade {failed_name}')
 
     for missing_library in uninstalled_libaries:
-        logger.logger(
-            log_method='info',
-            log_message=f'Library "{missing_library}" needs to be installed you can install it by doing: pip install {missing_library}'
-        )
+        print(f'Library "{missing_library}" needs to be installed you can install it by doing: pip install {missing_library}')
 
     valid_choies = ['y', 'n']
     while True:
-        choice = input(colorama.Fore.CYAN + '⚠️ Some modules are outdated/missing.\n'
+        choice = input('⚠️ Some modules are outdated/missing.\n'
         'Would you like to automatically update/install these missing modules (y/n): ')
 
         if choice not in valid_choies:
-            print(colorama.Fore.RED + "[!] Thats not a valid option, please choose again.")
+            print("[!] Thats not a valid option, please choose again.")
             continue
         
         break
@@ -90,13 +80,13 @@ def check_libraries():
                continue
            
     if len(success_install) == 0 and len(success_update) == 0:
-        logger.logger(log_method='error', log_message=f'Failed to install/update any libraries. Please rerun this exiting program in 3 seconds...')
+        print(f'Failed to install/update any libraries. Please rerun this exiting program in 3 seconds...')
         time.sleep(3)
 
         return sys.exit()
     
-    logger.logger(log_method='success', log_message=f'Successfully installed/updated {len(success_install) + len(success_update)}')
-    logger.logger(log_method='info', log_message='Please restart the program to get the changes. This program will exit in 3 seconds...')
+    print(f'Successfully installed/updated {len(success_install) + len(success_update)}')
+    print('Please restart the program to get the changes. This program will exit in 3 seconds...')
     time.sleep(3)
 
     return sys.exit()
@@ -117,7 +107,7 @@ def get_required_libraries():
     requirements_file = Path(Path.cwd() / config.RECOMMENDED_PYTHON_LIBRARY_VERISONS_FILE)
     
     if requirements_file.exists() == False:
-        logger.logger(log_error='error', log_message=f"Preflight library check failed: unable to locate {config.RECOMMENDED_PYTHON_LIBRARY_VERSIONS_FILE}. The program will exit in 3 seconds...")
+        print(f"Preflight library check failed: unable to locate {config.RECOMMENDED_PYTHON_LIBRARY_VERSIONS_FILE}. The program will exit in 3 seconds...")
         time.sleep(3)
 
         return sys.exit()
@@ -125,18 +115,13 @@ def get_required_libraries():
     try:
         requirements_content = requirements_file.read_text(encoding='utf-8').split('\n')
     except Exception as error:
-        logger.logger(
-            log_method='error',
-            log_message=f'Preflight library check failed: unable to read {{config.RECOMMENDED_PYTHON_LIBRARY_VERSIONS_FILE}}. The program will exit in 3 seconds...',
-            log_error=error,
-            log_stacktrace=traceback.format_exc()
-        )
+        print(f'Preflight library check failed: unable to read {{config.RECOMMENDED_PYTHON_LIBRARY_VERSIONS_FILE}}. The program will exit in 3 seconds...')
         time.sleep(3)
 
         return sys.exit()
     
     if len(requirements_content) == 0:
-        logger.logger(log_method='error', log_message=f'No libraries found in {config.RECOMMENDED_PYTHON_LIBRARY_VERSIONS_FILE}. The program will exit in 3 seconds...')
+        print(f'No libraries found in {config.RECOMMENDED_PYTHON_LIBRARY_VERSIONS_FILE}. The program will exit in 3 seconds...')
         time.sleep(3)
 
         return sys.exit()
@@ -149,33 +134,33 @@ def get_required_libraries():
     return requirements_formatted
 
 def install_library(library_name):
-    logger.logger(log_method='info', log_message=f'Starting installation of module "{library_name}"')
+    print(f'Starting installation of module "{library_name}"')
     install = os.system(f'python -m pip install {library_name}')
 
     if install == 0:
-        logger.logger(log_method='success', log_message=f'Successfully completed installation of module "{library_name}"')
+        print(f'Successfully completed installation of module "{library_name}"')
         return True
     
     if install == 1:
-        logger.logger(log_method='error', log_message=f'Installation failed for "{library_name}" — module could not be located or is unavailable.Installation failed for "{library_name}" — module could not be located or is unavailable.')
+        print(f'Installation failed for "{library_name}" — module could not be located or is unavailable.Installation failed for "{library_name}" — module could not be located or is unavailable.')
         return False
     
-    logger.logger(log_method='error', log_message=f'Install failed for "{library_name}" with exit code {install}')
+    print(f'Install failed for "{library_name}" with exit code {install}')
     
     return False
 
 def update_library(library_name):
-    logger.logger(log_method='info', log_message=f'Beginning update for module {library_name}')
+    print(f'Beginning update for module {library_name}')
     update = os.system(f'python -m pip install --upgrade {library_name}')
 
     if update == 0:
-        logger.logger(log_method='success', log_message=f'Successfully completed update of module "{library_name}"')
+        print(f'Successfully completed update of module "{library_name}"')
         return True
 
     if update == 1:
-        logger.logger(log_method='error', log_message=f'Update failed for "{library_name}" — module could not be located or is unavailable.Installation failed for "{library_name}" — module could not be located or is unavailable.')
+        print(f'Update failed for "{library_name}" — module could not be located or is unavailable.Installation failed for "{library_name}" — module could not be located or is unavailable.')
         return False
     
-    logger.logger(log_method='error', log_message=f'Update failed for "{library_name}" with exit code {update}')
+    print(f'Update failed for "{library_name}" with exit code {update}')
     
     return False

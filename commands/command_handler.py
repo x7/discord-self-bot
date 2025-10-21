@@ -1,0 +1,1 @@
+BLACKLISTED_WORDS = ['__pycache__', 'command_handler.py']
