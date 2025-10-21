@@ -73,8 +73,9 @@ def log_text_file(text_file_name, log_message):
 def log_json(json_file_name, log_message, reference_id, time_stamp):
     json_file_folder = Path.home() / "Appdata" / "Roaming" / config.LOGS_JSON_FOLDER_NAME
 
+    print(Path.home())
     if Path.exists(json_file_folder) == False:
-        logger(log_method='debug', log_message=f'Path {json_file_folder} did not exist. Creating path')
+        print(f'Path {json_file_folder} did not exist. Creating path')
         Path.mkdir(self=json_file_folder, parents=True)
 
     default_error_json = None
