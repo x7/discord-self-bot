@@ -1,4 +1,6 @@
 from pathlib import Path
+import platform
+import os
 import config
 import json
 import utils.log.logger as logger
@@ -25,7 +27,24 @@ DEFAULT_CONFIG = {
 }
 
 def get_config_path():
-    config_file_path = Path.home() / "AppData" / "Roaming" / config.CONFIG_FILE_NAME
+    print(Path.home())
+    system = platform.system()
+    config_file_path = None
+
+    match platform.system().lower():
+        case "windows":
+            config_file_path = Path.home() / "AppData" / "Roaming" / config.CONFIG_FILE_NAME
+
+        case "darwin":
+            # config_file_path = 
+            return
+        
+        case "linux":
+            return os.system('clear')
+        
+        case _:
+            logger.logger(log_method='error', log_message=f'OS: {system} is not currently supported. Failed to get a valid config path')
+            return None
     
     return Path(config_file_path)
 
