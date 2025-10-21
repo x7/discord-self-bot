@@ -26,30 +26,30 @@ DEFAULT_CONFIG = {
     }
 }
 
-def get_config_path():
-    print(Path.home())
+def get_config_folder():
     system = platform.system()
     config_file_path = None
 
     match platform.system().lower():
         case "windows":
-            config_file_path = Path.home() / "AppData" / "Roaming" / config.CONFIG_FILE_NAME
+            config_file_path = Path.home() / "AppData" / "Roaming" / config.CONFIG_FOLDER_NAME
 
         case "darwin":
-            # config_file_path = 
-            return
+            config_file_path = Path.home() / "Documents" / config.CONFIG_FILE_NAME
         
-        case "linux":
+        case "linux": # not supported
             return os.system('clear')
         
         case _:
-            logger.logger(log_method='error', log_message=f'OS: {system} is not currently supported. Failed to get a valid config path')
+            logger.logger(log_method='error', log_message=f'OS: {system} is not currently supported. Failed to get a valid config folder path')
             return None
     
     return Path(config_file_path)
 
 def does_config_exist():
-    if get_config_path().exists() == True:
+    config_file = get_config_folder() / config.CONFIG_FILE_NAME
+
+    if config_file().exists() == True:
         return True
 
     return False
